@@ -18,12 +18,13 @@
 
       allPackages = lsp ++ formatters ++ tools;
     in {
-      homeManagerModules.default = { config, lib, pkgs, ... }: {
-        home.packages = allPackages;
-      #
-      #   home.file.".config/nvim".source =
-      #     config.lib.file.mkOutOfStoreSymlink "${self}/config";
-      # };
+      homeManagerModules.default = { config, lib, pkgs, ... }:
+        {
+          # home.packages = allPackages;
+          #
+          # home.file.".config/nvim".source =
+          #   config.lib.file.mkOutOfStoreSymlink "${self}/config";
+        };
 
       devShells.${system}.default = pkgs.mkShell { packages = allPackages; };
     };
