@@ -1,5 +1,5 @@
 {
-  description = "Standalone Neovim config flake";
+  description = "Standalone Neovim config flake with modular package sets";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
@@ -18,21 +18,13 @@
 
       allPackages = lsp ++ formatters ++ tools;
     in {
-      homeManagerModules.default = { config, lib, pkgs, configPath ? null
-        , # <-- custom path to real config
-        ... }: {
-          home.packages = allPackages;
+      homeManagerModules.default = { config, lib, pkgs, ... }: {
+        home.packages = allPackages;
 
-          # Only use mkOutOfStoreSymlink if a real path was provided
-          home.file.".config/nvim" = if configPath != null then {
-            source = config.lib.file.mkOutOfStoreSymlink configPath;
-          } else {
-            # fallback: immutable store symlink (not recommended for development)
-            source = ./config;
-          };
-        };
+        home.file.".config/nvim".source =
+          config.lib.file.mkOutOfStoreSymlink "~/.nvim-nix/config";
+      };
 
       devShells.${system}.default = pkgs.mkShell { packages = allPackages; };
     };
 }
-
