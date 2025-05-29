@@ -128,8 +128,9 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
 -- Define base directories at the start of init.lua
 
 local config = vim.fn.stdpath("config")
+local home = os.getenv("HOME")
 
-vim.g.package_home = config .. "/.local/share"
+vim.g.package_home = home .. "/.local/share"
 vim.g.lazy_home = vim.g.package_home .. "/lazy"
 vim.g.mason_home = vim.g.package_home .. "/mason"
 
