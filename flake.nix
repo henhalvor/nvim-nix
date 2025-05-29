@@ -18,13 +18,18 @@
 
       allPackages = lsp ++ formatters ++ tools;
     in {
-      homeManagerModules.default = { config, lib, pkgs, ... }: {
-        home.packages = allPackages;
+      homeManagerModules.default =
+        { config, lib, pkgs, configPath ? null, ... }: {
+          home.packages = allPackages;
 
-        home.file.".config/nvim".source =
-          config.lib.file.mkOutOfStoreSymlink ./config;
-      };
+          # Use passed configPath if provided
+          home.file.".config/nvim".source = if configPath != null then
+            config.lib.file.mkOutOfStoreSymlink configPath
+          else
+            throw "You must pass `configPath` to the Neovim module.";
+        };
 
       devShells.${system}.default = pkgs.mkShell { packages = allPackages; };
     };
 }
+
