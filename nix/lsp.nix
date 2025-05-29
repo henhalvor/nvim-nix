@@ -5,8 +5,10 @@
 with pkgs;
   [
     lua-language-server
-    # pylsp
+    pyright
     typescript-language-server
+    gopls
+    nil #nix
   ]
   ++ (with pkgsUnstable; [
     efm-langserver
