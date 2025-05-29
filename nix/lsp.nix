@@ -5,8 +5,8 @@
 with pkgs;
   [
     lua-language-server
-    pylsp
-    tsserver
+    # pylsp
+    typescript-language-server
   ]
   ++ (with pkgsUnstable; [
     efm-langserver

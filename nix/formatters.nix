@@ -5,8 +5,8 @@
 with pkgs;
   [
     stylua
-    prettier
-    black
+    # prettier
+    # black
   ]
   ++ (with pkgsUnstable; [
     # any bleeding edge formatters here

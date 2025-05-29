@@ -33,5 +33,9 @@
       home.file.".config/nvim".source =
         config.lib.file.mkOutOfStoreSymlink "${self}/config";
     };
+
+    devShells.${system}.default = pkgs.mkShell {
+      packages = allPackages;
+    };
   };
 }
