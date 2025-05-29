@@ -5,7 +5,7 @@
 with pkgs;
   [
     stylua
-    nodepackages.prettier
+    nodePackages.prettier
     black
     nixfmt
   ]
