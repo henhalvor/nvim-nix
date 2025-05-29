@@ -150,7 +150,7 @@ vim.opt.rtp:prepend(lazypath)
 -- [[ Configure and install plugins ]]
 require("lazy").setup({
 	root = vim.g.lazy_home,
-	lockfile = config .. "/lazy-lock.json",
+	lockfile = vim.fn.expand("~/.local/state/nvim/lazy-lock.json"), -- Store lock file in state directory
 
 	-- importing core plugins from "./lua/core""
 	{ import = "core" },

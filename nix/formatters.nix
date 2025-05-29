@@ -7,7 +7,7 @@ with pkgs;
     stylua
     nodePackages.prettier
     black
-    nixfmt
+    nixfmt-classic
   ]
   ++ (with pkgsUnstable; [
     # any bleeding edge formatters here
