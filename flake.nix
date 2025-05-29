@@ -25,7 +25,7 @@
 
           # Only use mkOutOfStoreSymlink if a real path was provided
           home.file.".config/nvim" = if configPath != null then {
-            source = lib.file.mkOutOfStoreSymlink configPath;
+            source = lib.hm.file.mkOutOfStoreSymlink configPath;
           } else {
             # fallback: immutable store symlink (not recommended for development)
             source = ./config;
