@@ -65,8 +65,8 @@ return {
 		sources = {
 			-- Lower the minimum keyword length to trigger sources
 			min_keyword_length = 1,
-			-- default = { "avante", "lsp", "path", "snippets", "buffer" },
-			default = { "avante", "lsp", "path", "snippets", "buffer", "codecompanion" },
+			default = { "avante", "lsp", "path", "snippets", "buffer" },
+			-- default = { "avante", "lsp", "path", "snippets", "buffer", "codecompanion" },
 			providers = {
 				avante = {
 					module = "blink-cmp-avante",
