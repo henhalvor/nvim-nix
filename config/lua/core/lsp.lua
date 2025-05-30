@@ -128,8 +128,25 @@ return {
 			lua_ls = {
 				settings = {
 					Lua = {
-						completion = {
-							callSnippet = "Replace",
+						-- Make the server aware of Neovim runtime files
+						runtime = {
+							version = "LuaJIT", -- Neovim uses LuaJIT
+							path = vim.split(package.path, ";"), -- Use Neovim's package path
+						},
+						diagnostics = {
+							-- Get the language server to recognize the `vim` global
+							globals = { "vim" },
+						},
+						workspace = {
+							-- Make server aware of Neovim runtime files for better completion and diagnostics
+							library = vim.api.nvim_get_runtime_file("", true),
+							-- You might want to disable type checking for third-party code in your plugins
+							-- if it's causing too many warnings from files you don't directly control.
+							checkThirdParty = false,
+						},
+						-- Do not send telemetry data containing server info & basic usage stats
+						telemetry = {
+							enable = false,
 						},
 					},
 				},

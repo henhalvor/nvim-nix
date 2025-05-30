@@ -13,7 +13,6 @@ return {
       cmp = true,
       treesitter = true,
       telescope = true,
-      mason = true,
       noice = true,
       notify = true,
       which_key = true,

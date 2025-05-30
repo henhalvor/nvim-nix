@@ -33,7 +33,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 -- Indenting indication
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" } -- Tab is two spaces, trailing spaces are shown as dots, non-breaking spaces as a special character
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
@@ -124,6 +124,15 @@ vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
 	command = "silent! checktime",
 })
 
+-- [[ Setup Configuration Reload ]]
+-- Require the reload module
+-- local reloader = require("core.reload")
+--
+-- -- Keymap for reloading the configuration
+-- vim.keymap.set("n", "<leader>rc", function()
+-- 	reloader.reload_config()
+-- end, { noremap = true, silent = true, desc = "Reload Neovim Config" })
+--
 -- [[ Install `lazy.nvim` plugin manager ]]
 -- Define base directories at the start of init.lua
 
@@ -150,7 +159,6 @@ vim.opt.rtp:prepend(lazypath)
 -- [[ Configure and install plugins ]]
 require("lazy").setup({
 	root = vim.g.lazy_home,
-	lockfile = vim.fn.expand("~/.local/state/nvim/lazy-lock.json"), -- Store lock file in state directory
 
 	-- importing core plugins from "./lua/core""
 	{ import = "core" },

@@ -25,8 +25,8 @@ return {
     'nvim-neotest/nvim-nio',
     'theHamsta/nvim-dap-virtual-text',
     -- Installs the debug adapters for you
-    'williamboman/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
+    -- 'williamboman/mason.nvim',
+    -- 'jay-babu/mason-nvim-dap.nvim',
     -- Install the vscode-js-debug adapter
     {
       'microsoft/vscode-js-debug',
@@ -151,27 +151,27 @@ return {
   config = function()
     local dap = require 'dap'
 
-    -- Auto install debuggers
-    require('mason-nvim-dap').setup {
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
-      automatic_installation = true,
-
-      -- You can provide additional configuration to the handlers,
-      -- see mason-nvim-dap README for more information
-      handlers = {},
-
-      -- You'll need to check that you have the required things installed
-      -- online, please don't ask me how to install them :)
-      ensure_installed = {
-        -- Update this to ensure that you have the debuggers for the langs you want
-        -- 'delve',
-        'chrome-debug-adapter',
-        'js-debug-adapter',
-        'node-debug2-adapter',
-        'codelldb', -- Rust
-      },
-    }
+    -- -- Auto install debuggers
+    -- require('mason-nvim-dap').setup {
+    --   -- Makes a best effort to setup the various debuggers with
+    --   -- reasonable debug configurations
+    --   automatic_installation = true,
+    --
+    --   -- You can provide additional configuration to the handlers,
+    --   -- see mason-nvim-dap README for more information
+    --   handlers = {},
+    --
+    --   -- You'll need to check that you have the required things installed
+    --   -- online, please don't ask me how to install them :)
+    --   ensure_installed = {
+    --     -- Update this to ensure that you have the debuggers for the langs you want
+    --     -- 'delve',
+    --     'chrome-debug-adapter',
+    --     'js-debug-adapter',
+    --     'node-debug2-adapter',
+    --     'codelldb', -- Rust
+    --   },
+    -- }
 
     -- Boilerplate form lazyvim distro (Not using lazyvim)
     --[[ local Config = require 'lazyvim.config'
