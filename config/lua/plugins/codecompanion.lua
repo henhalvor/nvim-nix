@@ -13,10 +13,12 @@ return {
 					return require("codecompanion.adapters").extend("copilot", {
 						schema = {
 							model = {
-								default = "gemini-2.5-pro",
+								-- default = "gemini-2.5-pro",
+								default = "claude-4-sonnet",
 							},
 						},
-						formatted_name = "Gemini 2.5 Pro", -- Add this line
+						-- formatted_name = "Gemini 2.5 Pro", -- Add this line
+						formatted_name = "Claude 4 Sonnet", -- Add this line
 					})
 				end,
 			},

@@ -1,15 +1,10 @@
-{
-  pkgs,
-  pkgsUnstable,
-}:
+{ pkgs, pkgsUnstable, }:
 with pkgs;
-  [
-    lua-language-server
-    pyright
-    typescript-language-server
-    gopls
-    nil #nix
-  ]
-  ++ (with pkgsUnstable; [
-    efm-langserver
-  ])
+[
+  lua-language-server
+  pyright
+  typescript-language-server
+  gopls
+  nil # nix
+  tailwindcss-language-server
+] ++ (with pkgsUnstable; [ efm-langserver ])

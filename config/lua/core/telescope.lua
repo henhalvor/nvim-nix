@@ -104,7 +104,7 @@ return {
 		local root_dir = vim.fs.dirname(vim.fs.find(root_patterns, { upward = true })[1])
 
 		vim.keymap.set("n", "<leader>sc", function()
-			builtin.find_files({ cwd = root_dir, hidden = true })
+			builtin.find_files({ cwd = root_dir })
 		end, { desc = "[S]earch [C]urrent Project" })
 
 		vim.keymap.set("n", "<leader>s.", function()
