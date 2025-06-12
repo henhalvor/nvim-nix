@@ -5,6 +5,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			"github/copilot.vim",
+			"j-hui/fidget.nvim",
 		},
 		enabled = true,
 		opts = {
@@ -14,15 +15,115 @@ return {
 						schema = {
 							model = {
 								-- default = "gemini-2.5-pro",
-								default = "claude-4-sonnet",
+								default = "gpt-4o",
+								-- default = "claude-sonnet-4",
 							},
 						},
 						-- formatted_name = "Gemini 2.5 Pro", -- Add this line
-						formatted_name = "Claude 4 Sonnet", -- Add this line
+						formatted_name = "Gpt-4o", -- Add this line
+						-- formatted_name = "Claude 4 Sonnet", -- Add this line
 					})
 				end,
 			},
 
+			prompt_library = {
+				["Code Review (Selection)"] = {
+					strategy = "chat",
+					description = "Review visually selected code",
+					opts = {
+						modes = { "v" }, -- IMPORTANT: Only for Visual mode
+						short_name = "cr_selection",
+						adapter = "copilot",
+						auto_submit = true,
+						stop_context_insertion = true,
+					},
+					prompts = {
+						{
+							role = "system",
+							content = function(context)
+								-- Correctly gets only the selected code
+								local selected_code = require("codecompanion.helpers.actions").get_code(
+									context.start_line,
+									context.end_line
+								)
+								return string.format(
+									"You are an expert code reviewer for %s. Review the following code selection:\n\n```%s\n%s\n```",
+									context.filetype,
+									context.filetype,
+									selected_code
+								)
+							end,
+						},
+						-- Now, add the same sequence of detailed instructions
+						{
+							role = "user",
+							content = "Please analyze the code for:\n\n1. **Code Quality**: Structure, readability, maintainability\n2. **Logic & Correctness**: Potential bugs, edge cases\n3. **Best Practices**: Language-specific conventions\n4. **Initial Observations**: What stands out immediately?\n\nProvide detailed feedback with specific line references where applicable.",
+							opts = { auto_submit = true },
+						},
+						{
+							role = "user",
+							content = "Now let's dive deeper into security and performance:\n\n1. **Security Analysis**: Look for vulnerabilities, input validation issues, etc.\n2. **Performance Review**: Identify bottlenecks, inefficient algorithms, etc.\n3. **Error Handling**: Evaluate exception handling and edge case management.\n4. **Dependencies**: Comment on external library usage and potential risks.\n\nProvide specific recommendations for each area.",
+							opts = { auto_submit = true },
+						},
+						{
+							role = "user",
+							content = "Based on your analysis, please provide:\n\n1. **Priority Rankings**: Rate issues from critical to minor\n2. **Concrete Solutions**: Specific code examples for improvements\n3. **Refactoring Opportunities**: Suggest better patterns or structures\n4. **Testing Recommendations**: What should be tested and how?\n\nFocus on actionable feedback that can be implemented immediately.",
+							opts = { auto_submit = true },
+						},
+						{
+							role = "user",
+							content = "Finally, provide a concise summary:\n\n1. **Overall Assessment**: Rate code quality (1-10) with justification\n2. **Top 3 Action Items**: Most important changes\n3. **Strengths**: What the code does well\n4. **Long-term Recommendations**: Architectural suggestions.\n\nKeep this summary focused and actionable.",
+							opts = { auto_submit = false }, -- End of the automated chain
+						},
+					},
+				},
+				["Review Full Buffer"] = {
+					strategy = "chat",
+					description = "Review the entire current file",
+					opts = {
+						modes = { "n" }, -- IMPORTANT: Only for Normal mode
+						short_name = "cr_file",
+						adapter = "copilot",
+						auto_submit = true,
+					},
+					prompts = {
+						{
+							role = "system",
+							content = function(context)
+								local end_line = vim.api.nvim_buf_line_count(context.bufnr)
+								-- Corrected call: removed the third argument (bufnr)
+								local buffer_content = require("codecompanion.helpers.actions").get_code(1, end_line)
+								return string.format(
+									"You are an expert code reviewer for %s. Review the following file content:\n\n```%s\n%s\n```",
+									context.filetype,
+									context.filetype,
+									buffer_content
+								)
+							end,
+						},
+						{
+							role = "user",
+							content = "Please analyze the code for:\n\n1. **Code Quality**: Structure, readability, maintainability\n2. **Logic & Correctness**: Potential bugs, edge cases\n3. **Best Practices**: Language-specific conventions\n4. **Initial Observations**: What stands out immediately?\n\nProvide detailed feedback with specific line references where applicable.",
+							opts = { auto_submit = true },
+						},
+						{
+							role = "user",
+							content = "Now let's dive deeper into security and performance:\n\n1. **Security Analysis**: Look for vulnerabilities, input validation issues, etc.\n2. **Performance Review**: Identify bottlenecks, inefficient algorithms, etc.\n3. **Error Handling**: Evaluate exception handling and edge case management.\n4. **Dependencies**: Comment on external library usage and potential risks.\n\nProvide specific recommendations for each area.",
+							opts = { auto_submit = true },
+						},
+						{
+							role = "user",
+							content = "Based on your analysis, please provide:\n\n1. **Priority Rankings**: Rate issues from critical to minor\n2. **Concrete Solutions**: Specific code examples for improvements\n3. **Refactoring Opportunities**: Suggest better patterns or structures\n4. **Testing Recommendations**: What should be tested and how?\n\nFocus on actionable feedback that can be implemented immediately.",
+							opts = { auto_submit = true },
+						},
+						{
+							role = "user",
+							content = "Finally, provide a concise summary:\n\n1. **Overall Assessment**: Rate code quality (1-10) with justification\n2. **Top 3 Action Items**: Most important changes\n3. **Strengths**: What the code does well\n4. **Long-term Recommendations**: Architectural suggestions.\n\nKeep this summary focused and actionable.",
+							opts = { auto_submit = false }, -- End of the automated chain
+						},
+					},
+				},
+			},
 			display = {
 				chat = {
 					intro_message = "Welcome to CodeCompanion ✨! Press ? for options",
@@ -132,20 +233,38 @@ return {
 				desc = "CodeCompanion add to chat",
 			},
 		},
-		-- config = function()
-		-- 	require("codecompanion").setup({
-		-- 		extensions = {
-		-- 			mcphub = {
-		-- 				callback = "mcphub.extensions.codecompanion",
-		-- 				opts = {
-		-- 					show_result_in_chat = true, -- Show mcp tool results in chat
-		-- 					make_vars = true, -- Convert resources to #variables
-		-- 					make_slash_commands = true, -- Add prompts as /slash commands
-		-- 				},
-		-- 			},
-		-- 		},
-		-- 	})
-		-- end,
+		config = function(_, opts)
+			require("codecompanion").setup(opts)
+
+			local progress = require("fidget.progress")
+			local handles = {}
+			local group = vim.api.nvim_create_augroup("CodeCompanionFidget", {})
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "CodeCompanionRequestStarted",
+				group = group,
+				callback = function(e)
+					handles[e.data.id] = progress.handle.create({
+						title = "CodeCompanion",
+						message = "Thinking...",
+						lsp_client = { name = e.data.adapter.formatted_name },
+					})
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "CodeCompanionRequestFinished",
+				group = group,
+				callback = function(e)
+					local h = handles[e.data.id]
+					if h then
+						h.message = e.data.status == "success" and "Done" or "Failed"
+						h:finish()
+						handles[e.data.id] = nil
+					end
+				end,
+			})
+		end,
 	},
 
 	--
