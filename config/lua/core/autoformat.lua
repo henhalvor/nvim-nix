@@ -21,12 +21,17 @@ return { -- Autoformat
 				-- Silence the timeout notification
 				ignore_errors = true,
 			},
+			eslint_d = {
+				command = "eslint_d",
+				args = { "--fix", "--stdin", "--stdin-filename", "$FILENAME" },
+				stdin = true,
+			},
 		},
 		formatters_by_ft = {
-			javascript = { "prettier" },
-			typescript = { "prettier" },
-			javascriptreact = { "prettier" },
-			typescriptreact = { "prettier" },
+			javascript = { "eslint_d" },
+			typescript = { "eslint_d" },
+			javascriptreact = { "eslint_d" },
+			typescriptreact = { "eslint_d" },
 			svelte = { "prettier" },
 			css = { "prettier" },
 			html = { "prettier" },

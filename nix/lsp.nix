@@ -8,4 +8,5 @@ with pkgs;
   nil # nix
   tailwindcss-language-server
   vscode-langservers-extracted
+  eslint_d
 ] ++ (with pkgsUnstable; [ efm-langserver ])
