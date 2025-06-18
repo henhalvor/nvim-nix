@@ -153,6 +153,12 @@ return {
 				},
 			},
 			nil_ls = {},
+			eslint = {
+				settings = {
+					-- Adjust this if needed
+					workingDirectory = { mode = "auto" },
+				},
+			},
 		}
 
 		-- Configure LSP servers
