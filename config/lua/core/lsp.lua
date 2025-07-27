@@ -148,9 +148,21 @@ return {
 			},
 		})
 
-		-- Your custom TypeScript Go server (already using modern approach)
 		vim.lsp.config("ts_go_ls", {
 			cmd = { vim.fn.expand("~") .. "/code/bin/typescript-go/built/local/tsgo", "--lsp", "-stdio" }, -- manually built binary
+			capabilities = capabilities,
+			filetypes = {
+				"javascript",
+				"javascriptreact",
+				"javascript.jsx",
+				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
+			},
+			root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+		})
+
+		vim.lsp.config("ts_ls", {
 			capabilities = capabilities,
 			filetypes = {
 				"javascript",
@@ -172,7 +184,8 @@ return {
 			"lua_ls",
 			"nil_ls",
 			"eslint",
-			"ts_go_ls",
+			"ts_ls",
+			-- "ts_go_ls",
 		})
 	end,
 }
