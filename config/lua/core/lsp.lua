@@ -2,6 +2,7 @@ return {
 	"j-hui/fidget.nvim",
 	dependencies = {
 		"saghen/blink.cmp",
+		"neovim/nvim-lspconfig",
 	},
 
 	opts = {},
