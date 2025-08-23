@@ -110,6 +110,10 @@ return {
 			builtin.find_files({ cwd = root_dir, hidden = true, no_ignore = true })
 		end, { desc = "[S]earch Hidden files in project" })
 
+		vim.keymap.set("n", "<leader>cs", function()
+			builtin.colorscheme()
+		end, { desc = "Switch [C]olor [S]cheme" })
+
 		-- vim.keymap.set("n", "<leader>s.", function()
 		-- 	builtin.find_files({
 		-- 		cwd = vim.fn.expand("~/.dotfiles/"),
