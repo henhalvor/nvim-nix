@@ -11,7 +11,7 @@ return {
 		enabled = true,
 		opts = {
 			adapters = {
-				copilot = function()
+				opilot = function()
 					return require("codecompanion.adapters").extend("copilot", {
 						schema = {
 							model = {
@@ -124,6 +124,36 @@ return {
 						},
 					},
 				},
+				["Meticulous Documentation"] = {
+					strategy = "chat",
+					description = "Generate meticulous documentation for the current file",
+					opts = {
+						modes = { "n" }, -- IMPORTANT: Only for Normal mode
+						short_name = "doc_file",
+						adapter = "copilot",
+						auto_submit = true,
+					},
+					prompts = {
+						{
+							role = "system",
+							content = function(context)
+								local end_line = vim.api.nvim_buf_line_count(context.bufnr)
+								local buffer_content = require("codecompanion.helpers.actions").get_code(1, end_line)
+								return string.format(
+									"You are an expert technical writer for %s. Your task is to generate meticulous documentation for the following file content:\n\n```%s\n%s\n```",
+									context.filetype,
+									context.filetype,
+									buffer_content
+								)
+							end,
+						},
+						{
+							role = "user",
+							content = "Please generate documentation covering the following aspects:\n\n1. **Overall Summary**: A high-level overview of the file's purpose.\n2. **Modules/Classes/Functions**: Detailed explanation of each component, including its parameters, return values, and any side effects.\n3. **Usage Examples**: Provide clear code snippets demonstrating how to use the code.\n4. **Error Handling**: Describe how errors are handled.\n5. **Dependencies**: List any external or internal dependencies.\n\nEnsure the documentation is clear, concise, and easy to understand for other developers. @{insert_edit_into_file} #{buffer}",
+							opts = { auto_submit = false },
+						},
+					},
+				},
 			},
 			display = {
 				chat = {
@@ -157,7 +187,7 @@ return {
 				chat = {
 					adapter = "copilot",
 					roles = {
-						---The header name for the LLM's messages
+						---The header name for the LLM\'s messages
 						---@type string|fun(adapter: CodeCompanion.Adapter): string
 						llm = function(adapter)
 							-- return string.format("🤖 %s ", adapter.formatted_name) -- More descriptive
@@ -315,3 +345,4 @@ return {
 		end,
 	},
 }
+
