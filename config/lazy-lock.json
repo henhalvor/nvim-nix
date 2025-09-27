@@ -13,6 +13,7 @@
   "harpoon": { "branch": "harpoon2", "commit": "ed1f853847ffd04b2b61c314865665e1dadf22c7" },
   "lua-json5": { "branch": "master", "commit": "d8e962a98b9c66bda02b20df02868a72ef4c8803" },
   "mini.nvim": { "branch": "main", "commit": "25c8959b3fcf0461271a21dd204e6f3cd1cd7806" },
+  "neocodeium": { "branch": "main", "commit": "f67384cee91f8ffc0d2e09d257691b2461725d5b" },
   "nvim-dap": { "branch": "master", "commit": "b0f983507e3702f073bfe1516846e58b56d4e42f" },
   "nvim-dap-ui": { "branch": "master", "commit": "73a26abf4941aa27da59820fd6b028ebcdbcf932" },
   "nvim-dap-virtual-text": { "branch": "master", "commit": "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6" },
