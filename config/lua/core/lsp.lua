@@ -172,8 +172,24 @@ return {
 				"typescript",
 				"typescriptreact",
 				"typescript.tsx",
+				"svelte",
 			},
 			root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+		})
+
+		vim.lsp.config("svelte", {
+			capabilities = capabilities,
+			filetypes = { "svelte" },
+			root_markers = { "svelte.config.js", "svelte.config.ts", "package.json", ".git" },
+			settings = {
+				svelte = {
+					plugin = {
+						svelte = { enable = true },
+						typescript = { enable = true },
+						css = { enable = true },
+					},
+				},
+			},
 		})
 
 		-- Enable all configured servers
@@ -186,6 +202,7 @@ return {
 			"nil_ls",
 			"eslint",
 			"ts_ls",
+			"svelte",
 			-- "ts_go_ls",
 		})
 	end,

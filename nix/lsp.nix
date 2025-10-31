@@ -9,4 +9,5 @@ with pkgs;
   tailwindcss-language-server
   vscode-langservers-extracted
   eslint_d
+  svelte-language-server
 ] ++ (with pkgsUnstable; [ efm-langserver ])
