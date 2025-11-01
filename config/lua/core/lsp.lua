@@ -172,7 +172,6 @@ return {
 				"typescript",
 				"typescriptreact",
 				"typescript.tsx",
-				"svelte",
 			},
 			root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
 		})
