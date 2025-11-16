@@ -6,6 +6,8 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.g.mapleader = " "
+-- Set local leader (used by grug-far and some other plugins)
+vim.g.maplocalleader = ","
 vim.g.have_nerd_font = true
 -- Line numbers
 vim.opt.number = true
